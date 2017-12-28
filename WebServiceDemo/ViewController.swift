@@ -113,10 +113,11 @@ class ViewController: UIViewController,WebHandlerDelegate
         }
         else
         {
-            //Hide Indicator
-            myActivityIndicator.isHidden = true
-            myActivityIndicator.stopAnimating()
-            WebHandler.showAlertWithTilte(title: WebHandler.projectTitle , message: WebHandler.somthingWrongMsg as NSString)
+            DispatchQueue.main.async {
+                self.myActivityIndicator.isHidden = true
+                self.myActivityIndicator.stopAnimating()
+                WebHandler.showAlertWithTilte(title: WebHandler.projectTitle , message: WebHandler.somthingWrongMsg as NSString)
+            }
         }
         }
         if number == "user-login-get"
@@ -149,9 +150,11 @@ class ViewController: UIViewController,WebHandlerDelegate
             else
             {
                 //Hide Indicator
-                myActivityIndicator.isHidden = true
-                myActivityIndicator.stopAnimating()
+                 DispatchQueue.main.async {
+                    self.myActivityIndicator.isHidden = true
+                    self.myActivityIndicator.stopAnimating()
                 WebHandler.showAlertWithTilte(title: WebHandler.projectTitle , message: WebHandler.somthingWrongMsg as NSString)
+                }
             }
         }
     }
