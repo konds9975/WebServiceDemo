@@ -15,6 +15,10 @@
 		033912301E3F18DF00A7B804 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0339122E1E3F18DF00A7B804 /* LaunchScreen.storyboard */; };
 		0339123B1E3F18E000A7B804 /* WebServiceDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0339123A1E3F18E000A7B804 /* WebServiceDemoTests.swift */; };
 		033912461E3F18E000A7B804 /* WebServiceDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033912451E3F18E000A7B804 /* WebServiceDemoUITests.swift */; };
+		033912561E3F19C000A7B804 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033912541E3F19C000A7B804 /* Reachability.swift */; };
+		033912571E3F19C000A7B804 /* WebHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033912551E3F19C000A7B804 /* WebHandler.swift */; };
+		0364E44C1E55CEFF00368405 /* nav.png in Resources */ = {isa = PBXBuildFile; fileRef = 0364E44B1E55CEFF00368405 /* nav.png */; };
+		0364E44E1E55DA8900368405 /* nav2.png in Resources */ = {isa = PBXBuildFile; fileRef = 0364E44D1E55DA8900368405 /* nav2.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +53,10 @@
 		033912411E3F18E000A7B804 /* WebServiceDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WebServiceDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		033912451E3F18E000A7B804 /* WebServiceDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceDemoUITests.swift; sourceTree = "<group>"; };
 		033912471E3F18E000A7B804 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		033912541E3F19C000A7B804 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = Source/Reachability.swift; sourceTree = "<group>"; };
+		033912551E3F19C000A7B804 /* WebHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebHandler.swift; path = Source/WebHandler.swift; sourceTree = "<group>"; };
+		0364E44B1E55CEFF00368405 /* nav.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav.png; sourceTree = "<group>"; };
+		0364E44D1E55DA8900368405 /* nav2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav2.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +107,11 @@
 		033912211E3F18DD00A7B804 /* WebServiceDemo */ = {
 			isa = PBXGroup;
 			children = (
-				033912531E3F18F000A7B804 /* Source */,
 				033912221E3F18DE00A7B804 /* AppDelegate.swift */,
 				033912241E3F18DE00A7B804 /* ViewController.swift */,
 				033912261E3F18DE00A7B804 /* Main.storyboard */,
+				0364E44D1E55DA8900368405 /* nav2.png */,
+				033912531E3F18F000A7B804 /* Source */,
 				0339122C1E3F18DF00A7B804 /* Assets.xcassets */,
 				0339122E1E3F18DF00A7B804 /* LaunchScreen.storyboard */,
 				033912311E3F18DF00A7B804 /* Info.plist */,
@@ -132,6 +141,9 @@
 		033912531E3F18F000A7B804 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				0364E44B1E55CEFF00368405 /* nav.png */,
+				033912541E3F19C000A7B804 /* Reachability.swift */,
+				033912551E3F19C000A7B804 /* WebHandler.swift */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -244,7 +256,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				033912301E3F18DF00A7B804 /* LaunchScreen.storyboard in Resources */,
+				0364E44E1E55DA8900368405 /* nav2.png in Resources */,
 				0339122D1E3F18DF00A7B804 /* Assets.xcassets in Resources */,
+				0364E44C1E55CEFF00368405 /* nav.png in Resources */,
 				033912281E3F18DE00A7B804 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,7 +286,9 @@
 			files = (
 				033912251E3F18DE00A7B804 /* ViewController.swift in Sources */,
 				033912231E3F18DE00A7B804 /* AppDelegate.swift in Sources */,
+				033912561E3F19C000A7B804 /* Reachability.swift in Sources */,
 				0339122B1E3F18DF00A7B804 /* WebServiceDemo.xcdatamodeld in Sources */,
+				033912571E3F19C000A7B804 /* WebHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +533,7 @@
 				0339124C1E3F18E000A7B804 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0339124D1E3F18E000A7B804 /* Build configuration list for PBXNativeTarget "WebServiceDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -525,6 +542,7 @@
 				0339124F1E3F18E000A7B804 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		033912501E3F18E000A7B804 /* Build configuration list for PBXNativeTarget "WebServiceDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -533,6 +551,7 @@
 				033912521E3F18E000A7B804 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -1,14 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C68" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="WebServiceDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +21,62 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sft-7H-1Zl">
+                                <rect key="frame" x="126" y="80" width="145" height="30"/>
+                                <state key="normal" title="GET SERVICE CALL"/>
+                                <connections>
+                                    <action selector="getServiceCallBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3X8-VM-8K3"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="nav2.png" translatesAutoresizingMaskIntoConstraints="NO" id="XWO-t4-hHN">
+                                <rect key="frame" x="78" y="205" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="bOG-lU-qo2"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rwS-rw-0Mq">
+                                <rect key="frame" x="151" y="378" width="95" height="30"/>
+                                <state key="normal" title="Upload Image"/>
+                                <connections>
+                                    <action selector="uploadImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wdg-Nb-8Zh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O9s-hM-2s3">
+                                <rect key="frame" x="126" y="167" width="145" height="30"/>
+                                <state key="normal" title="POST SERVICE CALL"/>
+                                <connections>
+                                    <action selector="postServiceCallBtnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eHQ-Dq-UG4"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="sft-7H-1Zl" secondAttribute="trailing" constant="88" id="6k8-iq-e5X"/>
+                            <constraint firstItem="sft-7H-1Zl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="110" id="74K-D3-jLn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="O9s-hM-2s3" secondAttribute="trailing" constant="88" id="HN9-en-vLl"/>
+                            <constraint firstItem="rwS-rw-0Mq" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="135" id="LAf-w6-wc1"/>
+                            <constraint firstItem="sft-7H-1Zl" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="60" id="bWQ-jn-aaY"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="rwS-rw-0Mq" secondAttribute="trailing" constant="113" id="fSd-DA-s6n"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="rwS-rw-0Mq" secondAttribute="bottom" constant="259" id="fwt-vj-Xhf"/>
+                            <constraint firstItem="rwS-rw-0Mq" firstAttribute="top" secondItem="XWO-t4-hHN" secondAttribute="bottom" constant="45" id="jst-GR-3fy"/>
+                            <constraint firstItem="O9s-hM-2s3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="110" id="ofM-l3-fAT"/>
+                            <constraint firstItem="O9s-hM-2s3" firstAttribute="top" secondItem="sft-7H-1Zl" secondAttribute="bottom" constant="57" id="tdI-gb-xM4"/>
+                            <constraint firstItem="XWO-t4-hHN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="62" id="vPv-3p-elm"/>
+                            <constraint firstItem="XWO-t4-hHN" firstAttribute="top" secondItem="O9s-hM-2s3" secondAttribute="bottom" constant="8" id="wdL-KT-wXJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XWO-t4-hHN" secondAttribute="trailing" constant="41" id="xIh-MP-Fgj"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="image" destination="XWO-t4-hHN" id="RSf-EU-gkn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-95.200000000000003" y="61.619190404797607"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="nav2.png" width="958" height="130"/>
+    </resources>
 </document>
