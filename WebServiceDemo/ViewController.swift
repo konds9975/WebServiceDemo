@@ -10,6 +10,10 @@ import UIKit
 
 class ViewController: UIViewController,WebHandlerDelegate
 {
+  
+    
+    
+    
     @IBOutlet weak var image: UIImageView!
     var myActivityIndicator : UIActivityIndicatorView!
     override func viewDidLoad()
@@ -53,7 +57,7 @@ class ViewController: UIViewController,WebHandlerDelegate
         let url = WebHandler.mainUrl + "user-login?user_name=\(name)&user_password=\(pass)" as NSString
         
         print(url)
-        temp.doRequestGet(urlStr:url)
+        temp.doRequestGet(urlStr: url, number: "user-login-get")
 
     }
     
@@ -73,13 +77,15 @@ class ViewController: UIViewController,WebHandlerDelegate
         print(url)
         
         let parameter = ["user_name":name , "user_password":pass]
-        temp.doRequestPost(parameters: parameter as AnyObject, urlStr: url)
+        temp.doRequestPost(parameters: parameter as AnyObject, urlStr: url ,number: "user-login-post")
         
         
     }
     //MARK:- Get Request Service Resopnse
-    func APIResponseArrived(_ Response:AnyObject, error : String)
+    func APIResponseArrived(_ Response: AnyObject, error: String, number: String)
     {
+        if number == "user-login-post"
+        {
         if error != "0"
         {
             if Response is Dictionary<String, AnyObject>
@@ -111,6 +117,42 @@ class ViewController: UIViewController,WebHandlerDelegate
             myActivityIndicator.isHidden = true
             myActivityIndicator.stopAnimating()
             WebHandler.showAlertWithTilte(title: WebHandler.projectTitle , message: WebHandler.somthingWrongMsg as NSString)
+        }
+        }
+        if number == "user-login-get"
+        {
+            if error != "0"
+            {
+                if Response is Dictionary<String, AnyObject>
+                {
+                    print(Response)
+                    let Message = Response["Message"] as! NSString
+                    
+                    if "success" == Response["Status"] as! String
+                    {
+                        print(Response)
+                        //Hide Indicator
+                        myActivityIndicator.isHidden = true
+                        myActivityIndicator.stopAnimating()
+                        myActivityIndicator.isHidden = true
+                        WebHandler.showAlertWithTilte(title: WebHandler.projectTitle , message: Message)
+                    }
+                    else
+                    {
+                        //Hide Indicator
+                        myActivityIndicator.isHidden = true
+                        myActivityIndicator.stopAnimating()
+                        WebHandler.showAlertWithTilte(title: WebHandler.projectTitle , message: Message)
+                    }
+                }
+            }
+            else
+            {
+                //Hide Indicator
+                myActivityIndicator.isHidden = true
+                myActivityIndicator.stopAnimating()
+                WebHandler.showAlertWithTilte(title: WebHandler.projectTitle , message: WebHandler.somthingWrongMsg as NSString)
+            }
         }
     }
     

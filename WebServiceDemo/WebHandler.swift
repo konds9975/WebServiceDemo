@@ -11,7 +11,7 @@ import Foundation
 
 @objc protocol WebHandlerDelegate
 {
-    func APIResponseArrived(_ Response:AnyObject, error : String)
+    func APIResponseArrived(_ Response:AnyObject, error : String , number : String)
    
    @objc optional func imageUploadResponse(_ Response:AnyObject, error : String)
 }
@@ -20,21 +20,33 @@ class WebHandler: NSObject
     var reachability : Reachability! = nil
     var delegate:WebHandlerDelegate! = nil
    
-    let kMessageNoInternetConnection = "Server cannot be reached. Please, check your internet connection." as NSString
-    static let somthingWrongMsg = "Something went wrong. Please try again."
+    static let kMessageNoInternetConnection = "Please check your internet connection" as NSString
+    static let somthingWrongMsg = "Network error"
+    //"Something went wrong. Please try again."
     
-    static let mainUrl = "http://103.224.243.154/wordpress/Woocommerce/"
+    //static let mainUrl = "http://103.224.243.154/magento/marginfresh/soapapi/core/"
     
-    static let projectTitle = "Web Service Demo" as NSString
+    static let mainUrl = "https://marginfresh.com/staging/soapapi/core/"
+    static let mainUrl1 = "https://marginfresh.com/staging/soapapi/shopcart/"
+    static let mainUrl2 = "https://marginfresh.com/staging/soapapi/deviceid/"
+     static let mainUrl3 = "https://marginfresh.com/staging/soapapi/referafriend/"
+    
+ 
+    
+    static let projectTitle = "Margin Fresh" as NSString
     
     
-    func doRequestGet(urlStr : NSString )
+    func doRequestGet(urlStr : NSString ,number : String)
     {
-        reachability = Reachability()
+        DispatchQueue.global(qos: .background).async {
         
-        if reachability!.isReachable
+        
+        let urlStr = urlStr.replacingOccurrences(of: " ", with: "%20")
+        self.reachability = Reachability()
+        
+        if self.reachability!.isReachable
         {
-            print("Internet is Available ")
+           // print("Internet is Available ")
            
                // Show MBProgressHUD Here
             var config:URLSessionConfiguration!
@@ -51,12 +63,12 @@ class WebHandler: NSObject
         
             //MARK: HTTPMethod
             let HTTPMethod_Get = "GET"
-        
+            
             let callURL = URL.init(string: urlStr as String)
         
             var request = URLRequest.init(url: callURL!)
         
-            request.timeoutInterval = 60.0 // TimeoutInterval in Second
+            request.timeoutInterval = 120.0 // TimeoutInterval in Second
             request.cachePolicy = URLRequest.CachePolicy.reloadIgnoringLocalCacheData
             request.addValue(ContentType_ApplicationJson, forHTTPHeaderField: HTTPHeaderField_ContentType)
             request.httpMethod = HTTPMethod_Get
@@ -66,7 +78,7 @@ class WebHandler: NSObject
                 if error != nil
                 {
                     //return
-                    self.delegate.APIResponseArrived([] as AnyObject, error: "0")
+                    self.delegate.APIResponseArrived([] as AnyObject, error: "0" ,number : number)
                 }
                 do
                 {
@@ -74,20 +86,20 @@ class WebHandler: NSObject
                     {
                         let resultJson = try JSONSerialization.jsonObject(with: data!, options: []) as? [String:AnyObject]
                 
-                        print("Result",resultJson!)
-                        self.delegate.APIResponseArrived(resultJson as AnyObject , error: "1")
+                       // print("Result",resultJson!)
+                        self.delegate.APIResponseArrived(resultJson as AnyObject , error: "1",number : number)
                     }
                     else
                     {
-                        print("somthing went worng")
-                         self.delegate.APIResponseArrived([] as AnyObject, error: "0")
+                       // print("somthing went worng")
+                         self.delegate.APIResponseArrived([] as AnyObject, error: "0",number : number)
                         //self.delegate.somthingWentWorng(error:"Somthing Went Worng")
                     }
                 }
                 catch
                 {
                     print("Error -> \(error)")
-                    self.delegate.APIResponseArrived([] as AnyObject , error: "0")
+                    self.delegate.APIResponseArrived([] as AnyObject , error: "0",number : number)
                 }
             }
         
@@ -95,13 +107,17 @@ class WebHandler: NSObject
         }
         else
         {
-            print("Internet is NOT Available")
-             WebHandler.showAlertWithTilte(title: WebHandler.projectTitle , message:kMessageNoInternetConnection)
+           // print("Internet is NOT Available")
+             WebHandler.showAlertWithTilte(title: WebHandler.projectTitle , message:WebHandler.kMessageNoInternetConnection)
         }
+            
+        }
+
     }
     
-    func doRequestPost(parameters : AnyObject, urlStr : NSString)
+    func doRequestPost(parameters : AnyObject, urlStr : NSString ,number : String)
     {
+         let urlStr = urlStr.replacingOccurrences(of: " ", with: "%20")
         reachability = Reachability()
         
         if reachability!.isReachable
@@ -121,7 +137,7 @@ class WebHandler: NSObject
             var request = URLRequest(url: url)
         
             request.httpMethod = "POST" //set http method as POST
-        
+            request.timeoutInterval = 120.0
             do
             {
                 request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted) // pass dictionary to nsdata object and set it as request body
@@ -139,14 +155,14 @@ class WebHandler: NSObject
             
             guard error == nil else
             {
-                self.delegate.APIResponseArrived([] as AnyObject, error: "0")
+                self.delegate.APIResponseArrived([] as AnyObject, error: "0",number:  number)
                 return
 
             }
             
             guard let data = data else
             {
-                self.delegate.APIResponseArrived([] as AnyObject, error: "0")
+                self.delegate.APIResponseArrived([] as AnyObject, error: "0",number: number)
                 return
 
             }
@@ -156,9 +172,9 @@ class WebHandler: NSObject
                 //create json object from data
                 if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]
                 {
-                    print(json)
+                   // print(json)
                     // handle json...
-                    self.delegate.APIResponseArrived(json as AnyObject, error: "1")
+                    self.delegate.APIResponseArrived(json as AnyObject, error: "1",number:  number)
                     //  self.delegate.API(jsonDic: json as NSDictionary)
                 }
                 
@@ -166,7 +182,7 @@ class WebHandler: NSObject
             catch let error
             {
                 print(error.localizedDescription)
-                self.delegate.APIResponseArrived([] as AnyObject, error: "0")
+                self.delegate.APIResponseArrived([] as AnyObject, error: "0",number: number)
 
             }
             })
@@ -175,8 +191,8 @@ class WebHandler: NSObject
         }
         else
         {
-            print("Internet is NOT Available")
-            WebHandler.showAlertWithTilte(title: WebHandler.projectTitle , message:kMessageNoInternetConnection)
+           // print("Internet is NOT Available")
+            WebHandler.showAlertWithTilte(title: WebHandler.projectTitle , message:WebHandler.kMessageNoInternetConnection)
         }
       
     }
@@ -212,7 +228,8 @@ class WebHandler: NSObject
         let mimetype = "image/png"
         
         
-        for (key, value) in parameters {
+        for (key, value) in parameters
+        {
             
             body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
             body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n\(value)".data(using: String.Encoding.utf8)!)
@@ -266,6 +283,8 @@ class WebHandler: NSObject
         DispatchQueue.main.async(execute: {() -> Void in
             let alertController = UIAlertController(title: title as String, message: message as String, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: {(_ action: UIAlertAction) -> Void in
+                
+                
             }))
             UIApplication.shared.keyWindow?.rootViewController?.present(alertController, animated: true, completion: {() -> Void in
             })
@@ -275,3 +294,113 @@ class WebHandler: NSObject
     
     
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////
+//@IBAction func uploadImage(_ sender: Any)
+//{
+//    print("Up")
+//    //UploadRequest()
+//    let temp = WebHandler()
+//    temp.delegate=self
+//    let data = ["user_id" : "22"]
+//    // "http://74.208.12.101/snsapi/save_image.php"
+//    
+//    temp.UploadRequest(parameters: data, urlStr: "http://74.208.12.101/snsapi/save_image.php", imageName: "photo_pics", actualImage: image.image!)
+//    
+//    
+//}
+//func imageUploadResponse(_ Response:AnyObject, error : String)
+//{
+//    print(Response)
+//}
+//@IBAction func getServiceCallBtnClicked(_ sender: Any)
+//{
+//    //Show Indicator
+//    myActivityIndicator.startAnimating()
+//    //MARK: - Get Request
+//    let temp = WebHandler()
+//    temp.delegate=self
+//    
+//    let name = "pqr" as NSString
+//    let pass = "pass123" as NSString
+//    
+//    let url = WebHandler.mainUrl + "user-login?user_name=\(name)&user_password=\(pass)" as NSString
+//    
+//    print(url)
+//    temp.doRequestGet(urlStr:url)
+//    
+//}
+//
+//@IBAction func postServiceCallBtnClicked(_ sender: Any)
+//{
+//    //Show Indicato
+//    myActivityIndicator.startAnimating()
+//    //MARK: - Get Request
+//    let temp = WebHandler()
+//    temp.delegate=self
+//    
+//    let name = "pqr" as String
+//    let pass = "pass123" as String
+//    
+//    let url = WebHandler.mainUrl+"user-login" as NSString
+//    
+//    print(url)
+//    
+//    let parameter = ["user_name":name , "user_password":pass]
+//    temp.doRequestPost(parameters: parameter as AnyObject, urlStr: url)
+//    
+//    
+//}
+////MARK:- Get Request Service Resopnse
+//func APIResponseArrived(_ Response:AnyObject, error : String)
+//{
+//    if error != "0"
+//    {
+//        if Response is Dictionary<String, AnyObject>
+//        {
+//            print(Response)
+//            let Message = Response["Message"] as! NSString
+//            
+//            if "success" == Response["Status"] as! String
+//            {
+//                print(Response)
+//                //Hide Indicator
+//                myActivityIndicator.isHidden = true
+//                myActivityIndicator.stopAnimating()
+//                myActivityIndicator.isHidden = true
+//                WebHandler.showAlertWithTilte(title: WebHandler.projectTitle , message: Message)
+//            }
+//            else
+//            {
+//                //Hide Indicator
+//                myActivityIndicator.isHidden = true
+//                myActivityIndicator.stopAnimating()
+//                WebHandler.showAlertWithTilte(title: WebHandler.projectTitle , message: Message)
+//            }
+//        }
+//    }
+//    else
+//    {
+//        //Hide Indicator
+//        myActivityIndicator.isHidden = true
+//        myActivityIndicator.stopAnimating()
+//        WebHandler.showAlertWithTilte(title: WebHandler.projectTitle , message: WebHandler.somthingWrongMsg as NSString)
+//    }
+//}
+
